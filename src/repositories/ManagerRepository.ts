@@ -1,0 +1,5 @@
+
+
+class ManagerRepository {}
+
+export { ManagerRepository };
