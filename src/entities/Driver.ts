@@ -1,10 +1,17 @@
+class Driver {
 
-//id: readonly string
-//name: string
-//email: string
-//password: string
-//Número de atendimentos aceitados
-//orders_takes: number
-//Número de atendimentos finalizados
-//orders_finished: number
+    name: string;
 
+    email: string;
+
+    password: string;
+    
+    constructor(name: string, email: string, password: string) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
+
+}
+
+export { Driver }
