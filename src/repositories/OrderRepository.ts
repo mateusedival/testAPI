@@ -9,12 +9,30 @@ class OrderRepository extends BaseRepository<Order>{
         super(OrderModel)
     }
 
-    async updateStatusAccepted(_id: string) {
-        return OrderModel.updateOne({_id: _id},{status: Status.ACCEPTED})
+    async updateStatusAccepted(_id: string, driverId: string) {
+        return OrderModel.findOneAndUpdate({_id},{status: Status.ACCEPTED, driverId},{new: true})
     }
 
-    async updateStatusFinalized(_id: string) {
-        return OrderModel.updateOne({_id: _id},{status: Status.FINALIZED})
+    async updateStatusFinalized(_id: string, driverId: string) {
+        return OrderModel.findOneAndUpdate({_id},{status: Status.FINALIZED, driverId},{new: true})
+    }
+
+    async findAllForDriver(driverId: string) {
+        return OrderModel.find({$or: [
+                {
+                    status: Status.WAITING
+                },
+                {
+                    $and: [
+                        {
+                            status: Status.ACCEPTED
+                        },
+                        {
+                            driverId: driverId
+                        }
+                    ]
+                }
+        ]});
     }
 }
 

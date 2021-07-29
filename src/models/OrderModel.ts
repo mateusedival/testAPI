@@ -29,7 +29,11 @@ const orderSchema = new mongoose.Schema({
         type: String,
         enum: Status,
         default: Status.WAITING
-    }
+    },
+    driverId: mongoose.Types.ObjectId,
+},
+{
+    timestamps: true
 });
 
 const OrderModel = mongoose.model("Order",orderSchema);

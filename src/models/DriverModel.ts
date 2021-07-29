@@ -12,15 +12,10 @@ const driverSchema = new mongoose.Schema({
     password: {
         type: String,
         require: true,
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now
-    },
-    updatedAt: {
-        type: Date,
-        default: Date.now
     }
+},
+{
+    timestamps: true
 });
 
 const DriverModel = mongoose.model("Driver", driverSchema);

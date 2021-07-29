@@ -8,7 +8,6 @@ class ListDriversService {
         const drivers = await driverRepository.findAll();
 
         return drivers;
-
     }
 }
 

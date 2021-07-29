@@ -4,8 +4,12 @@ import { CreateOrderService } from "./CreateOrderService";
 
 class CreateOrderController {
     async handle(request: Request, response: Response) {
-        const { to, from} = request.body;
+        const { to, from } = request.body;
     
+        if(!to.city ||  !from.city) {
+            throw new Error("Invalid city");
+        }
+
         const createOrderService = new CreateOrderService();
 
         const order = await createOrderService.execute({to,from});

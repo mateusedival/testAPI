@@ -5,14 +5,17 @@ import { FinalizeOrderService } from "./FinalizeOrderService";
 class FinalizeOrderController {
     async handle(request: Request, response: Response) {
         const { _id } = request.params;
+        const { user_id } = request;
 
-        console.log(request.params)
+        if(!_id) {
+            throw new Error("Invalid order");
+        }
 
         const finalizeOrderService = new FinalizeOrderService();
 
-        await finalizeOrderService.execute({_id});
+        const order = await finalizeOrderService.execute({_id, driverId: user_id});
 
-        return response.status(204);
+        return response.json(order);
     }
 }
 

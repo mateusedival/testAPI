@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 
 
-mongoose.connect('mongodb://localhost:27017/testapi', { useNewUrlParser: true }).
+mongoose.connect('mongodb://localhost:27017/testapi', { useNewUrlParser: true, useFindAndModify: false }).
   catch(error => console.log(error));
 
 const db = mongoose.connection;

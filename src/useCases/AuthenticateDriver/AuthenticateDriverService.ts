@@ -11,6 +11,7 @@ class AuthenticateDriverService {
 
         const driver = await driverRepository.findByEmail(email);
 
+        //Driver doesn't exist
         if(!driver) {
             throw new Error("Email/password incorrect");
         }

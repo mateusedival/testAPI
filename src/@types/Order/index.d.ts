@@ -9,6 +9,8 @@ interface Order {
     from: Address;
     
     status?: Status;
+
+    driverId?: mongoose.Types.ObjectId;
 }
 
 export { Order }

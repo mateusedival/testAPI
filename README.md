@@ -2,7 +2,10 @@
 - Error Handling!!!!!!!
 - Singleton for Controller and service
 - Request Validation (ifs sucks 😯)
-- Order refs a driver??
-- Filter listOrder to only show waiting ones??
-- Dont filter listOrder to managers?
+- Order refs a driver ✅
+- Filter listOrder to only show waiting ones?? ✅
+- Dont filter listOrder to managers? ✅
+- Split route by collection
+- Export index
 - Code better 
+- Do again from scracth but now with nest.js

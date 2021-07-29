@@ -4,11 +4,7 @@ import { AcceptOrderDTO } from "./AcceptOrderDTO";
 
 
 class AcceptOrderService {
-    async execute({_id}: AcceptOrderDTO) {
-        console.log(_id);
-        if(!_id) {
-            throw new Error("Invalid order");
-        }
+    async execute({_id, driverId}: AcceptOrderDTO) {
 
         const orderRepository = new OrderRepository();
 
@@ -18,7 +14,7 @@ class AcceptOrderService {
             throw new Error("Order already taken or finished");
         }
 
-        const order = await orderRepository.updateStatusAccepted(_id);
+        const order = await orderRepository.updateStatusAccepted(_id, driverId);
 
         return order;
     }

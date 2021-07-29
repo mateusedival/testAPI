@@ -10,6 +10,7 @@ class AuthenticateManagerService {
 
         const manager = await managerRepository.findByEmail(email);
 
+        //Manager doesn't exist
         if(!manager) {
             throw new Error("Email/password incorrect");
         }

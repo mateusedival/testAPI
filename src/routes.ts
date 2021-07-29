@@ -8,8 +8,10 @@ import { CreateDriverController } from "./useCases/CreateDriver/CreateDriverCont
 import { CreateManagerController } from "./useCases/CreateManager/CreateManagerController";
 import { CreateOrderController } from "./useCases/CreateOrder/CreateOrderController";
 import { FinalizeOrderController } from "./useCases/FinalizeOrder/FinalizeOrderController";
+import { FindOrderByIdController } from "./useCases/FindOrderById/FindOrderByIdController";
 import { ListDriversContoller } from "./useCases/ListDrivers/ListDriversController";
 import { ListOrdersController } from "./useCases/ListOrders/ListOrdersController";
+import { ListOrdersDriversController } from "./useCases/ListOrdersDrivers/ListOrdersDriversController";
 
 const router = Router();
 
@@ -22,19 +24,22 @@ const listOrdersController = new ListOrdersController();
 const listDriversController = new ListDriversContoller();
 const acceptOrderController = new AcceptOrderController();
 const finalizeOrderController = new FinalizeOrderController();
+const findOrderByIdController = new FindOrderByIdController();
+const listOrdersDriversController = new ListOrdersDriversController();
 
 
 router.post("/drivers", ensureAutheticated, ensureAdmin, createDriverController.handle);
-router.post("/managers", createManagerController.handle);
-router.post("/orders", ensureAutheticated, ensureAdmin ,createOrderController.handle);
 router.post("/drivers/login", authenticateDriverController.handle);
+router.get("/drivers",ensureAutheticated,ensureAdmin,listDriversController.handle);
+
+router.post("/managers", createManagerController.handle);
 router.post("/managers/login", authenticateManagerController.handle);
 
-router.put('/orders/accept/:_id',ensureAutheticated,acceptOrderController.handle);
-router.put('/orders/finalize/:_id',ensureAutheticated,finalizeOrderController.handle);
-
-router.get("/orders",ensureAutheticated,listOrdersController.handle);
-router.get("/drivers",ensureAutheticated,ensureAdmin,listDriversController.handle)
-
+router.post("/orders", ensureAutheticated, ensureAdmin, createOrderController.handle);
+router.put('/orders/accept/:_id', ensureAutheticated, acceptOrderController.handle);
+router.put('/orders/finalize/:_id', ensureAutheticated, finalizeOrderController.handle);
+router.get("/orders/manager", ensureAutheticated, ensureAdmin, listOrdersController.handle);
+router.get("/orders/driver", ensureAutheticated, listOrdersDriversController.handle)
+router.get("/orders/:_id", ensureAutheticated, findOrderByIdController.handle);
 
 export { router }

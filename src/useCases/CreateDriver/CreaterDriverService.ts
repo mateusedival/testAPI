@@ -6,18 +6,6 @@ import { hash } from "bcryptjs";
 class CreateDriverService {
     async execute({name,email,password}: CreateDriverDTO) {
         
-        if(!name) {
-            throw new Error("Invalid name");
-        }
-
-        if(!email) {
-            throw new Error("Invalid email");
-        }
-
-        if(!password) {
-            throw new Error("Invalid password");
-        }
-
         const driverRepository = new DriverRepository();
         
         const driverAlreadyExists = await driverRepository.findByEmail(email);
