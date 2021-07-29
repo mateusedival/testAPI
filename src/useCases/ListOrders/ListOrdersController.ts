@@ -1,9 +1,14 @@
 import { Request, Response } from "express";
+import { ListOrdersService } from "./ListOrdersService";
 
 
 class ListOrdersController {
     async handle(request: Request, response: Response) {
-        return response.json("yay");
+        const listOrdersService = new ListOrdersService();
+
+        const orders = await listOrdersService.execute();
+
+        return response.json(orders);
     }
 
 }

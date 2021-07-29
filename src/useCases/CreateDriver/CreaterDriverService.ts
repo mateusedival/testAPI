@@ -1,17 +1,26 @@
-import { Driver } from "../../entities/Driver";
+import { Driver } from "../../@types/Driver";
 import { DriverRepository } from "../../repositories/DriverRepository";
-import { ICreateDriver } from "./CreteDriverDTO";
+import { CreateDriverDTO } from "./CreteDriverDTO";
 import { hash } from "bcryptjs";
 
 class CreateDriverService {
-    async execute({name,email,password}: ICreateDriver) {
-        const driverRepository = new DriverRepository();
+    async execute({name,email,password}: CreateDriverDTO) {
         
-        const driverAlreadyExists = await driverRepository.findByEmail(email);
-
         if(!name) {
             throw new Error("Invalid name");
         }
+
+        if(!email) {
+            throw new Error("Invalid email");
+        }
+
+        if(!password) {
+            throw new Error("Invalid password");
+        }
+
+        const driverRepository = new DriverRepository();
+        
+        const driverAlreadyExists = await driverRepository.findByEmail(email);
 
         if (driverAlreadyExists) {
            throw new Error("User already exist"); 
@@ -19,7 +28,7 @@ class CreateDriverService {
 
         const passwordHash = await hash(password,8);
 
-        const driver = await driverRepository.create(new Driver(name,email,passwordHash));
+        const driver = await driverRepository.create({name,email, password: passwordHash});
 
         return driver;
     }

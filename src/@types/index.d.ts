@@ -1,5 +1,5 @@
 
-export interface Address {
+interface Address {
     city: string;
     state: string;
     street_name: string;
@@ -7,3 +7,5 @@ export interface Address {
     latitude: number;
     longitude: number;
 }
+
+export { Address };

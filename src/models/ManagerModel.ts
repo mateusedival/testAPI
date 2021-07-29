@@ -1,6 +1,9 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-const driverSchema = new mongoose.Schema({
+//Ver se é melhor implementar uma unica classe User com campo de admin ou não
+//A principio os dois foram separados pois acessam sistemas diferentes
+
+const managerSchema = new mongoose.Schema({
     name: {
         type: String,
         require: true,
@@ -23,6 +26,6 @@ const driverSchema = new mongoose.Schema({
     }
 });
 
-const DriverModel = mongoose.model("Driver", driverSchema);
+const ManagerModel = mongoose.model("Manager", managerSchema);
 
-export { DriverModel };
+export { ManagerModel };
