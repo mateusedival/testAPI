@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import mongoose from "mongoose";
+import { InvalidIdError } from "../../errors/User";
 import { AcceptOrderService } from "./AcceptOrderService";
 
 
@@ -9,7 +10,7 @@ class AcceptOrderController {
         const { user_id } = request;
 
         if(!mongoose.isValidObjectId(_id)) {
-            throw new Error("Invalid order");
+            throw new InvalidIdError();
         }
 
         const acceptOrderService = new AcceptOrderService();

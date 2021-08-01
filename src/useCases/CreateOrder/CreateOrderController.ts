@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { InvalidAddressError } from "../../errors/Order";
 import { CreateOrderService } from "./CreateOrderService";
 
 
@@ -7,7 +8,7 @@ class CreateOrderController {
         const { to, from } = request.body;
     
         if(!to.city ||  !from.city) {
-            throw new Error("Invalid city");
+            throw new InvalidAddressError();
         }
 
         const createOrderService = new CreateOrderService();

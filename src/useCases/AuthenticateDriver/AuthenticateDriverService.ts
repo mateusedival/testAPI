@@ -1,5 +1,6 @@
 import { compare } from "bcryptjs";
 import { sign } from "jsonwebtoken";
+import { IncorrectLoginError } from "../../errors/User";
 import { DriverRepository } from "../../repositories/DriverRepository";
 import { AuthenticateDriverDTO } from "./AuthenticateDriverDTO";
 
@@ -13,13 +14,13 @@ class AuthenticateDriverService {
 
         //Driver doesn't exist
         if(!driver) {
-            throw new Error("Email/password incorrect");
+            throw new IncorrectLoginError();
         }
 
         const passwordMatch = await compare(password, driver.password);
 
         if(!passwordMatch) {
-            throw new Error("Email/password incorrect");
+            throw new IncorrectLoginError();
         }
 
         const token = sign(

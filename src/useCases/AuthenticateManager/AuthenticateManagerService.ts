@@ -1,5 +1,6 @@
 import { compare } from "bcryptjs";
 import { sign } from "jsonwebtoken";
+import { IncorrectLoginError } from "../../errors/User";
 import { ManagerRepository } from "../../repositories/ManagerRepository";
 import { AuthenticateManagerDTO } from "./AuthenticateManagerDTO";
 
@@ -12,13 +13,13 @@ class AuthenticateManagerService {
 
         //Manager doesn't exist
         if(!manager) {
-            throw new Error("Email/password incorrect");
+            throw new IncorrectLoginError();
         }
 
         const passwordMatch = await compare(password, manager.password);
 
         if(!passwordMatch) {
-            throw new Error("Email/password incorrect");
+            throw new IncorrectLoginError();
         }
 
         const token = sign(

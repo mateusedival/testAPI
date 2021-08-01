@@ -8,7 +8,7 @@ class DriverRepository extends BaseRepository<Driver>{
         super(DriverModel);
     }
 
-    async findByEmail(email: string): Promise<Driver> {
+    async findByEmail(email: string) {
         return DriverModel.findOne({ email });
     }
 

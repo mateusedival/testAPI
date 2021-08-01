@@ -1,6 +1,6 @@
 ## todo
-- Error Handling!!!!!!!
-- Singleton for Controller and service
+- Error Handling!!!!!!!  ✅
+- Singleton for Controller and service and repository
 - Request Validation (ifs sucks 😯)
 - Order refs a driver ✅
 - Filter listOrder to only show waiting ones?? ✅
@@ -8,4 +8,4 @@
 - Split route by collection
 - Export index
 - Code better 
-- Do again from scracth but now with nest.js
+- Do again from scracth but now with nest.js 🛌

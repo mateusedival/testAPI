@@ -1,14 +1,15 @@
 import { Request, Response } from "express";
 import { FinalizeOrderService } from "./FinalizeOrderService";
-
+import mongoose from "mongoose";
+import { InvalidIdError } from "../../errors/User";
 
 class FinalizeOrderController {
     async handle(request: Request, response: Response) {
         const { _id } = request.params;
         const { user_id } = request;
 
-        if(!_id) {
-            throw new Error("Invalid order");
+        if(!mongoose.isValidObjectId(_id)) {
+            throw new InvalidIdError();
         }
 
         const finalizeOrderService = new FinalizeOrderService();

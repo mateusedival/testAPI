@@ -7,7 +7,7 @@ class ManagerRepository extends BaseRepository<Manager>{
         super(ManagerModel);
     }
  
-    async findByEmail(email: string): Promise<Manager> {
+    async findByEmail(email: string): Promise<Manager>{
          return ManagerModel.findOne({ email });
      }
 }

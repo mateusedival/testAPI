@@ -1,4 +1,5 @@
 import { Status } from "../../@types/enums";
+import { OrderFromAnotherDriverError, OrderNotAcceptedError, OrderNotFoundError } from "../../errors/Order";
 import { OrderRepository } from "../../repositories/OrderRepository";
 import { FinalizeOrderDTO } from "./FinalizeOrderDTO";
 
@@ -10,12 +11,16 @@ class FinalizeOrderService {
 
         const oldOrder = await orderRepository.findById(_id);
 
+        if(!oldOrder) {
+            throw new OrderNotFoundError();
+        }
+
         if((oldOrder.driverId as string) != driverId) {
-            throw new Error("Cannot finalize order from another driver")
+            throw new OrderFromAnotherDriverError();
         }
 
         if(oldOrder.status != Status.ACCEPTED) {
-            throw new Error("Order not accepted or already finished");
+            throw new OrderNotAcceptedError();
         }
 
         const order = await orderRepository.updateStatusFinalized(_id, driverId);

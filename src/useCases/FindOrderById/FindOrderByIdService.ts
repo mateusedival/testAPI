@@ -1,3 +1,4 @@
+import { OrderNotFoundError } from "../../errors/Order";
 import { OrderRepository } from "../../repositories/OrderRepository";
 import { FindOrderByIdDTO } from "./FindOrderByIdDTO";
 
@@ -9,7 +10,7 @@ class FindOrderByIdService {
         const order = await orderRepository.findById(_id);
         
         if(!order) {
-            throw new Error("Order not found");
+            throw new OrderNotFoundError();
         }
 
         return order;

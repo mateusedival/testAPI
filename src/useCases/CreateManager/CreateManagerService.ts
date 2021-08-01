@@ -1,4 +1,5 @@
 import { hash } from "bcryptjs";
+import { UserAlreadyExistError } from "../../errors/User";
 import { ManagerRepository } from "../../repositories/ManagerRepository";
 import { CreateDriverDTO } from "../CreateDriver/CreteDriverDTO";
 
@@ -11,7 +12,7 @@ class CreateManagerService {
         const managerAlreadyExists = await managerRepository.findByEmail(email);
 
         if (managerAlreadyExists) {
-           throw new Error("User already exist"); 
+           throw new UserAlreadyExistError(); 
         }
 
         const passwordHash = await hash(password,8);

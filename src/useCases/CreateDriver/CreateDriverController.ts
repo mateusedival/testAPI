@@ -1,21 +1,22 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
+import { InvalidEmailError, InvalidNameError, InvalidPasswordError } from "../../errors/User";
 import { CreateDriverService } from "./CreaterDriverService";
 
 
 class CreateDriverController {
-    async handle(request: Request, response: Response) {
+    async handle(request: Request, response: Response, next: NextFunction) {
         const { name, email, password} = request.body;
 
         if(!name) {
-            throw new Error("Invalid name");
+            throw new InvalidNameError();
         }
 
         if(!email) {
-            throw new Error("Invalid email");
+            throw new InvalidEmailError();
         }
 
         if(!password) {
-            throw new Error("Invalid password");
+            throw new InvalidPasswordError();
         }
 
         const createDriverService = new CreateDriverService();
