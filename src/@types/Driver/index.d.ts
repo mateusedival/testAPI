@@ -7,7 +7,8 @@ interface Driver {
 
     email: string;
 
-    password: string;
+    password?: string;
 }
+
 
 export { Driver }

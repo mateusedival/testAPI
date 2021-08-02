@@ -21,7 +21,7 @@ class AcceptOrderService {
 
         const order = await orderRepository.updateStatusAccepted(_id, driverId);
 
-        return order;
+        return {status: order.status};
     }
 }
 

@@ -1,6 +1,7 @@
 import { Address } from "..";
 import { Status } from "../enums";
 
+//Atendimento
 interface Order {
     readonly _id?: mongoose.Types.ObjectId;
 

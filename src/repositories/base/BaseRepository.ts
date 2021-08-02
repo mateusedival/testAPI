@@ -13,10 +13,10 @@ export abstract class BaseRepository<T> {
     }
 
     async findAll(): Promise<T[]> {
-        return this.model.find({});
+        return this.model.find({},{__v: 0});
     }
 
     async findById(_id: string): Promise<T> {
-        return this.model.findById(_id);
+        return this.model.findById(_id,{__v: 0});
     }
 }

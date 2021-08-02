@@ -32,12 +32,12 @@ router.post("/drivers", ensureAutheticated, ensureAdmin, createDriverController.
 router.post("/drivers/login", authenticateDriverController.handle);
 router.get("/drivers",ensureAutheticated,ensureAdmin,listDriversController.handle);
 
-router.post("/managers", createManagerController.handle);
+router.post("/managers",ensureAutheticated, ensureAdmin, createManagerController.handle);
 router.post("/managers/login", authenticateManagerController.handle);
 
 router.post("/orders", ensureAutheticated, ensureAdmin, createOrderController.handle);
-router.put('/orders/accept/:_id', ensureAutheticated, acceptOrderController.handle);
-router.put('/orders/finalize/:_id', ensureAutheticated, finalizeOrderController.handle);
+router.patch('/orders/accept/:_id', ensureAutheticated, acceptOrderController.handle);
+router.patch('/orders/finalize/:_id', ensureAutheticated, finalizeOrderController.handle);
 router.get("/orders/manager", ensureAutheticated, ensureAdmin, listOrdersController.handle);
 router.get("/orders/driver", ensureAutheticated, listOrdersDriversController.handle)
 router.get("/orders/:_id", ensureAutheticated, findOrderByIdController.handle);

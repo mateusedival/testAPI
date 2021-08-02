@@ -25,7 +25,7 @@ class FinalizeOrderService {
 
         const order = await orderRepository.updateStatusFinalized(_id, driverId);
 
-        return order;
+        return {status: order.status};
     }
 }
 

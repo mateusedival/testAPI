@@ -8,8 +8,12 @@ class DriverRepository extends BaseRepository<Driver>{
         super(DriverModel);
     }
 
+    override async  findAll() {
+        return DriverModel.find({},{password: 0, __v: 0})
+    }
+
     async findByEmail(email: string) {
-        return DriverModel.findOne({ email });
+        return DriverModel.findOne({ email },{__v: 0}).lean();
     }
 
 }

@@ -1,1 +1,563 @@
-{}
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API de teste",
+        "description": "Back-end da aplicação",
+        "version": "0.1.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000/",
+            "description": "API de teste"
+        }
+    ],
+    "paths": {
+        "/drivers/login": {
+            "post": {
+                "summary": "Autentifica um motorista",
+                "description": "Autentifica um motorista",
+                "tags": ["Driver"],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserLogin"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "token": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Algum campo do corpo do request está invalido"
+                    },
+                    "404": {
+                        "description": "Informações de login incorretas"
+                    }
+
+                }
+            }
+        },
+        "/drivers": {
+            "post": {
+                "summary": "Cria um novo motorista",
+                "description": "Cria um novo motorista",
+                "tags": ["Driver"],
+                "security": [{"bearerAuth": []}],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateUser"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Driver"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Algum campo do corpo do request está invalido ou o Usuário ja existe"
+                    },
+                    "401": {
+                        "description": "Não autorizado"
+                    }
+                }
+            },
+            "get": {
+                "summary": "Retorna uma lista de motoristas",
+                "description": "Retorna uma lista de motoristas. Apenas gerentes podem listar os motoristas",
+                "tags": ["Driver"],
+                "security": [{"bearerAuth": []}],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Driver"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Não autorizado"
+                    },
+                    "403": {
+                        "description": "Proibido"
+                    }
+                }
+            }
+        },
+        "/managers": {
+            "post": {
+                "summary": "Cria um novo gerente",
+                "description": "Cria um novo gerente",
+                "tags": ["Manager"],
+                "security": [{"bearerAuth": []}],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateUser"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "token": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Algum campo do corpo do request está invalido ou o Usuário ja existe"
+                    },
+                    "401": {
+                        "description": "Não autorizado"
+                    },
+                    "403": {
+                        "description": "Proibido"
+                    }
+                }
+            }
+        },
+        "/managers/login": {
+            "post": {
+                "summary": "Autentifica um gerente",
+                "description": "Autentifica um gerente",
+                "tags": ["Manager"],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserLogin"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Manager"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Algum campo do corpo do request está invalido"
+                    },
+                    "404": {
+                        "description": "Informações de login incorretas"
+                    }
+                }
+            }
+        },
+        "/orders": {
+            "post": {
+                "summary": "Cria um novo atendimento",
+                "description": "Cria um novo atemdimento. Somente gerentes podem criam atedimentos",
+                "tags": ["Order"],
+                "security": [{"bearerAuth": []}],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateOrder"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Order"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Endereço inválido"
+                    },
+                    "401": {
+                        "description": "Não autorizado"
+                    },
+                    "403": {
+                        "description": "Proibido"
+                    }
+                }
+            }
+        },
+        "/orders/accept/{_id}": {
+            "patch": {
+                "summary": "Faz um motorista aceitar um atendimento",
+                "description": "Faz um motorista aceitar um atendimento. Somente atendimentos pendentes podem ser aceitos",
+                "tags": ["Order"],
+                "security": [{"bearerAuth": []}],
+                "parameters": [{
+                    "required": true,
+                    "name": "_id",
+                    "in": "path",
+                    "schema": {
+                        "type": "string"
+                    },
+                    "description": "Id do atendimento"
+                }],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "default": "Accepted"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Corpo do request inválido ou atendimento já aceitou ou finalizado"
+                    },
+                    "401": {
+                        "description":"Não autorizado"
+                    },
+                    "404": {
+                        "description": "Não foi possível encontrar um atendimento com esse _id"
+                    }
+                }
+            }
+        },
+        "/orders/finalize/{_id}": {
+            "patch": {
+                "summary": "Finaliza um atendimento",
+                "description": "Finaliza um atedimento. Somente atendimentos aceitos podem ser finalizados",
+                "tags": ["Order"],
+                "security": [{"bearerAuth": []}],
+                "parameters": [{
+                    "required": true,
+                    "name": "_id",
+                    "in": "path",
+                    "schema": {
+                        "type": "string"
+                    },
+                    "description": "Id do atendimento"
+                }],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "default": "Finalized"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Corpo do request inválido ou atendimento pendente ou já finalizado"
+                    },
+                    "401": {
+                        "description":"Não autorizado"
+                    },
+                    "404": {
+                        "description": "Não foi possível encontrar um atendimento com esse _id"
+                    }
+                }
+            }
+        },
+        "/orders/manager": {
+            "get": {
+                "summary": "Lista todos os atendimentos",
+                "description": "Lista todos os atendimentos. Somente gerentes podem listar todos os atendimentos",
+                "tags": ["Order"],
+                "security": [{"bearerAuth": []}],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Order"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description":"Não autorizado"
+                    },
+                    "403": {
+                        "description": "Proibido"
+                    }
+                }
+            }
+        },
+        "/orders/driver": {
+            "get": {
+                "summary": "Lista todos os atendimentos pendentes ou aceitos pelo motorista",
+                "description": "Lista todos os atendimentos pendentes ou aceitos pelo motorista",
+                "tags": ["Order"],
+                "security": [{"bearerAuth": []}],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Order"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description":"Não autorizado"
+                    },
+                    "403": {
+                        "description": "Proibido"
+                    }
+                }
+            }
+        },
+        "/orders/{_id}": {
+            "get": {
+                "summary": "Retorna os detalhes de um atedimento",
+                "description": "Retorna os detalhes de um atedimento",
+                "tags": ["Order"],
+                "security": [{"bearerAuth": []}],
+                "parameters": [{
+                    "required": true,
+                    "name": "_id",
+                    "in": "path",
+                    "schema": {
+                        "type": "string"
+                    },
+                    "description": "Id do atendimento"
+                }],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Order"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description":"Não autorizado"
+                    },
+                    "404": {
+                        "description":"Atendimento não encontrado"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Driver": {
+                "type": "object",
+                "properties" : {
+                    "_id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "Manager": {
+                "type": "object",
+                "properties" : {
+                    "_id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "CreateUser": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                }
+            },
+            "UserLogin" : {
+                "type": "object",
+                "properties" : {
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                }
+            },
+            "CreateOrder": {
+                "type": "object",
+                "properties": {
+                    "to": {
+                        "$ref": "#/components/schemas/Address"
+                    },
+                    "from": {
+                        "$ref": "#/components/schemas/Address"
+                    }
+                }
+            },
+            "Order": {
+                "type": "object",
+                "properties": {
+                    "to": {
+                        "$ref": "#/components/schemas/Address"
+                    },
+                    "from": {
+                        "$ref": "#/components/schemas/Address"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "_id": {
+                        "type": "string"
+                    }, 
+                    "driverId": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+
+                }
+            },
+            "Address": {
+                "type": "object",
+                "properties": {
+                    "city": {
+                        "type": "string"
+                    },
+                    "state": {
+                        "type": "string"
+                    },
+                    "street_name": {
+                        "type": "string"
+                    },
+                    "street_number": {
+                        "type": "string"
+                    },
+                    "latitude": {
+                        "type": "number"
+                    },
+                    "longitude": {
+                        "type": "number"
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    }
+}

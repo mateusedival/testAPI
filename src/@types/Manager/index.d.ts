@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+//Manager seria o gerente
 interface Manager {
     readonly _id?: mongoose.Types.ObjectId;
     
@@ -7,7 +8,7 @@ interface Manager {
 
     email: string;
 
-    password: string;
+    password?: string;
 
 
 }

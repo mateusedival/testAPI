@@ -27,7 +27,7 @@ class InvalidIdError extends GenericError {
 
 class IncorrectLoginError extends GenericError {
     constructor() {
-        super("Email or password incorrect",HTTPStatusCode.BAD_REQUEST);
+        super("Email or password incorrect",HTTPStatusCode.NOT_FOUND);
     }
 }
 

@@ -16,8 +16,9 @@ class CreateManagerService {
         }
 
         const passwordHash = await hash(password,8);
+
         const manager = await managerRepository.create({name,email,password: passwordHash});
-    
+        
         return manager;
     }
 }

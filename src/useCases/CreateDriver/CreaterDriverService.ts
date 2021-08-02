@@ -18,7 +18,7 @@ class CreateDriverService {
         const passwordHash = await hash(password,8);
 
         const driver = await driverRepository.create({name,email, password: passwordHash});
-
+    
         return driver;
     }
 }
